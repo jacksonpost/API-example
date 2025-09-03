@@ -1,0 +1,44 @@
+---
+title: Old
+layout: layout.njk
+---
+
+<div id="test"></div>
+
+<script>
+  //this is my API key from NMA website
+  const apiKey = "dUE8AYylCvyTMEdOCrKBMJd4SBb55hce";
+  const nmaURL = "https://data.nma.gov.au/object?apikey" + apiKey;
+
+  const objectAPI = "https://data.nma.gov.au/object/14693&apikey=" + apiKey;
+  // const imageAPI = "https://data.nma.gov.au/object?limit=20&media=*&medium=*"
+
+  async function getObjects() {
+    try {
+      //go get the data from NMA
+      const response = await fetch(objectAPI);
+      //return it in JSON
+      const data = await response.json();
+
+      //log the data to the browser
+      console.log(data);
+
+      data.data.forEach((item) => {
+        console.log(item);
+
+        // 1. create a container
+        const itemContainer = document.createElement("div");
+
+        // 2. use template literals to easily embed the data in the string
+        itemContainer.innerHTML = `<h2>${item.title}</2>`;
+
+        // 3. append to the page
+        objectsContainer.appendChild(itemContainer);
+      });
+    } catch (error) {
+      console.log("error: ", error);
+    }
+  }
+
+  getObjects();
+</script>

@@ -1,0 +1,14 @@
+<nav>
+  <ul>
+    {# loop through nav.json #}
+    {% for item in nav %}
+      <li>
+        <a href="{{ item.url }}"
+          {# Add the active class to the current page #}
+          {% if page.url == item.url %} class="active" {% endif %}>
+          {{ item.title }}
+        </a>
+      </li>
+    {% endfor %}
+  </ul>
+</nav>

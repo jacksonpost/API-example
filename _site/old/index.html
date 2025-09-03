@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<head>
+  <meta charset="UTF-8">
+    <title>Old</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+    
+      
+      
+      
+      
+</head>
+<body>
+  <header id="top">
+    <div class="wrapper">
+      <h1 id="title">
+        <span class="colour-highlight">11841</span>
+        | API Examples</h1>
+      <nav>
+  <ul>
+    
+    
+      <li>
+        <a href="/"
+          
+          >
+          Home
+        </a>
+      </li>
+    
+      <li>
+        <a href="/advanced/"
+          
+          >
+          Advanced
+        </a>
+      </li>
+    
+      <li>
+        <a href="/week6/"
+          
+          >
+          Week6
+        </a>
+      </li>
+    
+      <li>
+        <a href="/intermediate/"
+          
+          >
+          Intermediate
+        </a>
+      </li>
+    
+      <li>
+        <a href="/geolocation/"
+          
+          >
+          Geolocation
+        </a>
+      </li>
+    
+      <li>
+        <a href="/weather/"
+          
+          >
+          Weather
+        </a>
+      </li>
+    
+  </ul>
+</nav>
+    </div>
+  </header>
+  <main>
+    <div class="wrapper">
+      
+<div id="test"></div>
+
+<script>
+  //this is my API key from NMA website
+  const apiKey = "dUE8AYylCvyTMEdOCrKBMJd4SBb55hce";
+  const nmaURL = "https://data.nma.gov.au/object?apikey" + apiKey;
+
+  const objectAPI = "https://data.nma.gov.au/object/14693&apikey=" + apiKey;
+  // const imageAPI = "https://data.nma.gov.au/object?limit=20&media=*&medium=*"
+
+  async function getObjects() {
+    try {
+      //go get the data from NMA
+      const response = await fetch(objectAPI);
+      //return it in JSON
+      const data = await response.json();
+
+      //log the data to the browser
+      console.log(data);
+
+      data.data.forEach((item) => {
+        console.log(item);
+
+        // 1. create a container
+        const itemContainer = document.createElement("div");
+
+        // 2. use template literals to easily embed the data in the string
+        itemContainer.innerHTML = `<h2>${item.title}</2>`;
+
+        // 3. append to the page
+        objectsContainer.appendChild(itemContainer);
+      });
+    } catch (error) {
+      console.log("error: ", error);
+    }
+  }
+
+  getObjects();
+</script>
+
+    </div>
+  </main>
+  <footer>
+    <div class="wrapper">
+      <p>11841 API Example Site, 2025</p>
+<div class="back-to-top">
+  <a href="#top">Back to top</a>
+</div>
+    </div>
+  </footer>
+</body>

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<head>
+  <meta charset="UTF-8">
+    <title>Home</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+    
+      
+      
+      
+      
+</head>
+<body>
+  <header id="top">
+    <div class="wrapper">
+      <h1 id="title">
+        <span class="colour-highlight">11841</span>
+        | API Examples</h1>
+      <nav>
+  <ul>
+    
+    
+      <li>
+        <a href="/"
+          
+           class="active" >
+          Home
+        </a>
+      </li>
+    
+      <li>
+        <a href="/advanced/"
+          
+          >
+          Advanced
+        </a>
+      </li>
+    
+      <li>
+        <a href="/week6/"
+          
+          >
+          Week6
+        </a>
+      </li>
+    
+      <li>
+        <a href="/intermediate/"
+          
+          >
+          Intermediate
+        </a>
+      </li>
+    
+      <li>
+        <a href="/geolocation/"
+          
+          >
+          Geolocation
+        </a>
+      </li>
+    
+      <li>
+        <a href="/weather/"
+          
+          >
+          Weather
+        </a>
+      </li>
+    
+  </ul>
+</nav>
+    </div>
+  </header>
+  <main>
+    <div class="wrapper">
+      <h2>Load an item through the NFSA API:</h2>
+<div id="objectsContainer"></div>
+<script>
+  async function getData(query) {
+    const url = "https://api.collection.nfsa.gov.au/search?query=" + query;
+    try {
+      const response = await fetch(url);
+      if (! response.ok) {
+        throw new Error(`Response status: ${
+          response.status
+        }`);
+      }
+      console.log(response);
+      const data = await response.json();
+      console.log(data);
+      let item = data.results[0];
+      // 1. create a container
+      const itemContainer = document.createElement("div");
+      // 2. use template literals to easily embed the data in the string
+      itemContainer.innerHTML = `<h2>${
+        item.title
+      }</h2><p>${
+        item.name
+      }</p>`;
+      // 3. append to the page
+      let targetObject = document.getElementById("objectsContainer");
+      targetObject.appendChild(itemContainer);
+      // // 1. create a container const itemContainer = document.createElement('div'); // 2. create our html tags const title
+      // = '<h2>'+ item.title + '</h2>'; // 3. add all the html tags to the listItem itemContainer.innerHTML = title ; // 4.
+      // append to the page objectsContainer.appendChild(itemContainer);
+    } catch (error) {
+      console.error(error.message);
+    }
+  }
+  getData("cat");
+</script>
+    </div>
+  </main>
+  <footer>
+    <div class="wrapper">
+      <p>11841 API Example Site, 2025</p>
+<div class="back-to-top">
+  <a href="#top">Back to top</a>
+</div>
+    </div>
+  </footer>
+</body>
