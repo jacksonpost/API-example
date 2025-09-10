@@ -24,8 +24,8 @@ function searchByText(query) {
   if (filterKeys.length > 0) {
     query += "&" + filterKeys.map((key) => `${key}=${filters[key]}`).join("&");
   }
-  console.log("filters: ", filters);
-  console.log("query: ", query);
+  // console.log("filters: ", filters);
+  // console.log("query: ", query);
 
   const queryUrl = `https://api.collection.nfsa.gov.au/search?query=${query}`;
   console.log(`Searching NFSA API for: ${query}`);
