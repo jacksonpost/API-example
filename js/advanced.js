@@ -152,6 +152,7 @@ function createImageMosaic(urls) {
   const images = urls;
   // create an image element for each image
   images.forEach((imgurl) => {
+    if(fileTypeFromExtension(imgurl) !== "image") return;
     const imgElement = document.createElement("img");
     imgElement.src = imgurl;
     imgElement.alt = "Mosaic Image";
