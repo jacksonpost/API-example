@@ -1,0 +1,24 @@
+name: Eleventy Build and Deploy
+
+on:
+  push:
+    branches:
+      - main # or your default branch
+
+jobs:
+  build_deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Build Eleventy site
+        uses: TartanLlama/actions-eleventy@v2 # Or use custom steps to install Node.js and run 'npx @11ty/eleventy'
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          publish_dir: _site # The directory where Eleventy outputs the built site
+          publish_branch: gh-pages # The branch to deploy to (e.g., gh-pages for GitHub Pages)
+          github_token: ${{ secrets.GITHUB_TOKEN }} # Automatically provided by GitHub Actions
