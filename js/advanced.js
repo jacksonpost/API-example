@@ -126,11 +126,9 @@ async function getData(url) {
     const data = await response.json();
 
     console.log("Full API Response:", data);
-    // CSS framework alternatives
-    // displayResultsBootstrap(data.results);
-    // displayResultsTailwind(data.results);
+
     displayResults(data.results);
-    createImageMosaic(data.results);
+    createImageMosaic(extractMediaUrls(data.results));
   } catch (error) {
     console.error("Error fetching data:", error);
     document.getElementById(
@@ -138,27 +136,6 @@ async function getData(url) {
     ).innerHTML = `<p>Error fetching data. Please try again later.</p>`;
   }
 }
-
-// Function to fetch data from NFSA API (week6)
-// function getData(url, callback, append = false) {
-//   fetch(url)
-//     .then(response => {
-//       if (!response.ok) throw new Error("Network response was not ok");
-//       return response.json();
-//     })
-//     .then(data => {
-//       if (callback) {
-//         callback(data);
-//       } else {
-//         displayResults(data.results, append);
-//       }
-//     })
-//     .catch(error => {
-//       console.error("Error fetching data:", error);
-//       const outputDiv = document.getElementById("objectsContainer");
-//       outputDiv.innerHTML = "<p>Error fetching data. Please try again later.</p>";
-//     });
-// }
 
 function fileTypeFromExtension(filename) {
   const extensionTypes = {
@@ -233,8 +210,22 @@ function displayResults(results) {
   });
 }
 
+function extractMediaUrls(results) {
+  const mediaUrls = [];
+  results.forEach((item) => {
+    const imgArr = item.preview || [];
+    const baseurl = "https://media.nfsacollection.net/";
+    for (let i = 0; i < imgArr.length; i++) {
+      if (imgArr[i].hasOwnProperty("filePath")) {
+        mediaUrls.push(baseurl + imgArr[i].filePath);
+      }
+    }
+  });
+  return mediaUrls;
+}
+
 // build a fullscreen mosaic of images to use as a background
-function createImageMosaic(results) {
+function createImageMosaic(urls) {
   let mosaicContainer = document.getElementById("mosaicContainer");
   // create container if it doesn't exist
   if (!mosaicContainer) {
@@ -243,21 +234,8 @@ function createImageMosaic(results) {
     document.body.appendChild(mosaicContainer);
   }
   mosaicContainer.innerHTML = ""; // Clear previous results
-  // find all images in results
-  const images = results
-    .map((item) => {
-      const imgArr = item.preview || [];
-      const baseurl = "https://media.nfsacollection.net/";
-      for (let i = 0; i < imgArr.length; i++) {
-        if (imgArr[i].hasOwnProperty("filePath")) {
-          if (fileTypeFromExtension(imgArr[i].filePath) === "image") {
-            return baseurl + imgArr[i].filePath;
-          }
-        }
-      }
-      return null;
-    })
-    .filter((url) => url !== null);
+
+  const images = urls;
   // create an image element for each image
   images.forEach((imgurl) => {
     const imgElement = document.createElement("img");
@@ -276,6 +254,8 @@ function createImageMosaic(results) {
   }
   console.log("Mosaic created with images:", images);
 }
+
+// ===== REDUNDANT CODE =====
 
 // Function to display API results with Bootstrap styling
 function displayResultsBootstrap(results) {
@@ -370,3 +350,4 @@ function displayResultsTailwind(results) {
 
 // Hardcoded fetch for testing
 //getData("https://api.collection.nfsa.gov.au/search?query=dog");
+
