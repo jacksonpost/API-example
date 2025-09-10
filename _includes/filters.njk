@@ -5,6 +5,7 @@
  #}
 {# loop through nav.json #}
 {% for item in filters %}
+  <div class="filter">
   {% if item.type == 'boolean' %}
     <input type="checkbox" name="{{ item.name }}" value="yes">
     <label for="{{ item.name }}">{{ item.label }}</label>
@@ -14,4 +15,5 @@
         <label for="{{ item.name }}">{{ value }}</label>
     {% endfor %}
   {% endif %}
+  </div>
 {% endfor %} 
