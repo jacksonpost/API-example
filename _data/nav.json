@@ -1,8 +1,0 @@
-[
-  {"title": "Home", "url": "/"},
-  {"title": "Advanced", "url": "/advanced/"},
-  {"title": "Week6", "url": "/week6/"},
-  {"title": "Intermediate", "url": "/intermediate/"},
-  {"title": "Geolocation", "url":"/geolocation/"},
-  {"title": "Weather", "url":"/weather/"}
-]

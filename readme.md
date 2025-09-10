@@ -1,3 +1,0 @@
-To start 11ty dev server:
-npx @11ty/eleventy --serve
-
