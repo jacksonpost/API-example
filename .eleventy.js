@@ -4,10 +4,14 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addPassthroughCopy("js");
   eleventyConfig.addPassthroughCopy("images");
 
+  // Default to "/" for local dev
+  const pathPrefix = process.env.ELEVENTY_PATH_PREFIX || "/";
+
   return {
     dir: {
       input: ".",
       output: "_site"
-    }
+    },
+    pathPrefix
   };
 };
