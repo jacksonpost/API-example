@@ -1,9 +1,9 @@
-name: Eleventy Deploy
+name: Eleventy Build and Deploy
 
 on:
   push:
     branches:
-      - main   # or master, depending on your default branch
+      - main   # or master if that's your default
 
 jobs:
   build-deploy:
@@ -12,6 +12,17 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build Eleventy site
+        run: npx @11ty/eleventy
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
