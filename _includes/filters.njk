@@ -1,0 +1,17 @@
+{# add checkbox filters to modify api query #}
+{# filters allow modifying api query to return:
+- only results with images
+- results filtered by media type
+ #}
+{# loop through nav.json #}
+{% for item in filters %}
+  {% if item.type == 'boolean' %}
+    <input type="checkbox" name="{{ item.name }}" value="yes">
+    <label for="{{ item.name }}">{{ item.label }}</label>
+  {% elseif item.type == 'array' %}
+    {% for value in item.value %}
+      <input type="checkbox" name="{{ item.name }}" value="{{ value }}">
+        <label for="{{ item.name }}">{{ value }}</label>
+    {% endfor %}
+  {% endif %}
+{% endfor %} 

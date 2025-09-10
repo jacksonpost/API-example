@@ -144,13 +144,22 @@ form {
 }
 
 #objectsContainer {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--gap-m);
+  /* display: flex; */
+  /* flex-wrap: wrap; */
+  /* gap: var(--gap-m); */
+
+  /* create a masonry layout */
+  column-count: 3;
+  column-gap: var(--gap-m);
+
   & > * {
     background: white;
     border-radius: 4px;
-    flex: 1 0 calc(20% - var(--gap-m));
+    margin-bottom: var(--gap-m);
+    /* stop partial content wrapping onto next column */
+    break-inside: avoid;
+    /* flex: 1 0 calc(20% - var(--gap-m)); */
+    /* width: calc(20% - var(--gap-m)); */
   }
   img,
   video,

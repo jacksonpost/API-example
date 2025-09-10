@@ -1,0 +1,4 @@
+[
+  { "name": "hasMedia", "label": "Has Media", "type": "boolean", "value": false },
+  { "name": "mediaFileTypes", "label": "File Medium", "type": "array", "value": ["Image", "Audio", "Video"] }
+]

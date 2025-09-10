@@ -67,9 +67,9 @@ function searchByLocation(location) {
   getData(queryUrl);
 }
 
+// Search box listener
 const searchButton = document.getElementById("searchButton");
 const searchInput = document.getElementById("searchInput");
-
 if (searchButton && searchInput) {
   searchButton.addEventListener("click", (event) => {
     event.preventDefault(); // Prevent form submission if inside a form
@@ -93,15 +93,34 @@ function searchByText(query) {
     alert("Please enter a search term.");
     return;
   }
-  const queryUrl = `https://api.collection.nfsa.gov.au/search?query=${encodeURIComponent(
-    query
-  )}&hasMedia=yes`;
+
+  query = encodeURIComponent(query); // encode special characters in the query string
+
+  // read filters from form
+  const form = document.querySelector("form");
+  const formData = new FormData(form);
+  const filters = {};
+  formData.forEach((value, key) => {
+    if (key === "searchInput") return;
+    filters[key] = value;
+  });
+
+  // add filters to query
+  const filterKeys = Object.keys(filters);
+  if (filterKeys.length > 0) {
+    query += "&" + filterKeys.map((key) => `${key}=${filters[key]}`).join("&");
+  }
+  console.log("filters: ", filters);
+  console.log("query: ", query);
+
+  const queryUrl = `https://api.collection.nfsa.gov.au/search?query=${query}`;
   console.log(`Searching NFSA API for: ${query}`);
   getData(queryUrl);
 }
 
 // Function to fetch data from NFSA API
 async function getData(url) {
+  console.log(url);
   try {
     const response = await fetch(url);
     const data = await response.json();
@@ -160,7 +179,7 @@ function displayResults(results) {
   objectsContainer.innerHTML = ""; // Clear previous results
 
   results.forEach((item) => {
-    console.log("Item:", item); // Step to log each item
+    //console.log("Item:", item); // Step to log each item
 
     // Extract the preview array
     const imgArr = item.preview || []; // Default to empty array
@@ -173,7 +192,7 @@ function displayResults(results) {
     // Loop through the preview array to find an image
     const baseurl = "https://media.nfsacollection.net/";
     for (let i = 0; i < imgArr.length; i++) {
-      console.log("Preview object:", imgArr[i]); // Log preview object
+      //console.log("Preview object:", imgArr[i]); // Log preview object
 
       if (imgArr[i].hasOwnProperty("filePath")) {
         // Check if the file is an image, video, or audio
@@ -246,11 +265,14 @@ function createImageMosaic(results) {
     imgElement.alt = "Mosaic Image";
     mosaicContainer.appendChild(imgElement);
   });
-  // randomise the order of images
-  for (let i = mosaicContainer.children.length; i >= 0; i--) {
-    mosaicContainer.appendChild(
-      mosaicContainer.children[(Math.random() * i) | 0]
-    );
+  // make sure there are at least two images in the mosaic
+  if (mosaicContainer.children.length > 1 && images.length > 1) {
+    // randomise the order of images
+    for (let i = mosaicContainer.children.length; i >= 0; i--) {
+      mosaicContainer.appendChild(
+        mosaicContainer.children[(Math.random() * i) | 0]
+      );
+    }
   }
   console.log("Mosaic created with images:", images);
 }

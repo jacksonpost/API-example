@@ -79,10 +79,33 @@
     <div class="wrapper">
       
 <form>
-  
-  <label class="visually-hidden" for="searchInput">Search:</label>
-  <input name="searchInput" type="text" id="searchInput" placeholder="Search NFSA Collection...">
+
+<label class="visually-hidden" for="searchInput">Search:</label>
+<input name="searchInput" type="text" id="searchInput" placeholder="Search NFSA Collection...">
   <button type="submit" id="searchButton">Search</button>
+
+
+
+
+  
+    <input type="checkbox" name="hasMedia" value="yes">
+    <label for="hasMedia">Has Media</label>
+  
+
+  
+    
+      <input type="checkbox" name="mediaFileTypes" value="Image">
+        <label for="mediaFileTypes">Image</label>
+    
+      <input type="checkbox" name="mediaFileTypes" value="Audio">
+        <label for="mediaFileTypes">Audio</label>
+    
+      <input type="checkbox" name="mediaFileTypes" value="Video">
+        <label for="mediaFileTypes">Video</label>
+    
+  
+ 
+
 </form>
 
 <div id="objectsContainer"></div>
