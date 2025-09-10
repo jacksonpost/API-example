@@ -1,4 +1,4 @@
-name: Eleventy Build and Deploy
+name: Eleventy Deploy
 
 on:
   push:
@@ -12,17 +12,6 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: 18   # or 20, works with latest Eleventy
-
-      - name: Install dependencies
-        run: npm install
-
-      - name: Build Eleventy site
-        run: npx @11ty/eleventy
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
