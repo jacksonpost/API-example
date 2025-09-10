@@ -1,89 +1,3 @@
-// Function to get user's location and fetch data based on city or suburb
-function getLocationAndFetchData() {
-  if ("geolocation" in navigator) {
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        const lat = position.coords.latitude;
-        const lon = position.coords.longitude;
-        console.log(`user: ${lat}, ${lon}`);
-
-        // Call function to convert lat/lon to city/suburb
-        getCityFromCoordinates(lat, lon);
-      },
-      (error) => {
-        console.error("Geolocation error:", error);
-        document.getElementById(
-          "objectsContainer"
-        ).innerHTML = `<p>Could not retrieve location. Showing default results.</p>`;
-
-        // Fallback: Use a general query if geolocation fails
-        getData("https://api.collection.nfsa.gov.au/search?query=dog");
-      }
-    );
-  } else {
-    console.log("Geolocation not supported in this browser.");
-    document.getElementById(
-      "objectsContainer"
-    ).innerHTML = `<p>Geolocation is not supported. Showing default results.</p>`;
-
-    // Fetch default data
-    getData("https://api.collection.nfsa.gov.au/search?query=dog");
-  }
-}
-
-// Function to convert lat/lon into a city or suburb using OpenStreetMap's Nominatim API
-function getCityFromCoordinates(lat, lon) {
-  const geoApiUrl = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`;
-
-  fetch(geoApiUrl)
-    .then((response) => response.json())
-    .then((data) => {
-      console.log("Geocoding API Response:", data);
-
-      // Extract city or suburb from response
-      let locationName = data.address.suburb;
-
-      if (locationName) {
-        console.log(`Detected Location: ${locationName}`);
-        searchByLocation(locationName);
-      } else {
-        console.log("No city/suburb found, using default search.");
-        getData("https://api.collection.nfsa.gov.au/search?query=dog");
-      }
-    })
-    .catch((error) => {
-      console.error("Error retrieving location:", error);
-      getData("https://api.collection.nfsa.gov.au/search?query=dog");
-    });
-}
-
-// Function to search NFSA API using city/suburb name
-function searchByLocation(location) {
-  const queryUrl = `https://api.collection.nfsa.gov.au/search?query=${encodeURIComponent(
-    location
-  )}`;
-  console.log(`Searching NFSA API for: ${location}`);
-
-  getData(queryUrl);
-}
-
-// Search box listener
-const searchButton = document.getElementById("searchButton");
-const searchInput = document.getElementById("searchInput");
-if (searchButton && searchInput) {
-  searchButton.addEventListener("click", (event) => {
-    event.preventDefault(); // Prevent form submission if inside a form
-    const query = searchInput.value;
-    searchByText(query);
-  });
-  searchInput.addEventListener("keypress", (event) => {
-    if (event.key === "Enter") {
-      event.preventDefault(); // Prevent form submission if inside a form
-      const query = searchInput.value;
-      searchByText(query);
-    }
-  });
-}
 
 // Receive a text string and fetch data from NFSA API
 // receive string from a search box in response to a button click or enter key
@@ -344,6 +258,95 @@ function displayResultsTailwind(results) {
     objectsContainer.appendChild(itemContainer);
   });
 }
+
+
+// Function to get user's location and fetch data based on city or suburb
+function getLocationAndFetchData() {
+  if ("geolocation" in navigator) {
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const lat = position.coords.latitude;
+        const lon = position.coords.longitude;
+        console.log(`user: ${lat}, ${lon}`);
+
+        // Call function to convert lat/lon to city/suburb
+        getCityFromCoordinates(lat, lon);
+      },
+      (error) => {
+        console.error("Geolocation error:", error);
+        document.getElementById(
+          "objectsContainer"
+        ).innerHTML = `<p>Could not retrieve location. Showing default results.</p>`;
+
+        // Fallback: Use a general query if geolocation fails
+        getData("https://api.collection.nfsa.gov.au/search?query=dog");
+      }
+    );
+  } else {
+    console.log("Geolocation not supported in this browser.");
+    document.getElementById(
+      "objectsContainer"
+    ).innerHTML = `<p>Geolocation is not supported. Showing default results.</p>`;
+
+    // Fetch default data
+    getData("https://api.collection.nfsa.gov.au/search?query=dog");
+  }
+}
+
+// Function to convert lat/lon into a city or suburb using OpenStreetMap's Nominatim API
+function getCityFromCoordinates(lat, lon) {
+  const geoApiUrl = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`;
+
+  fetch(geoApiUrl)
+    .then((response) => response.json())
+    .then((data) => {
+      console.log("Geocoding API Response:", data);
+
+      // Extract city or suburb from response
+      let locationName = data.address.suburb;
+
+      if (locationName) {
+        console.log(`Detected Location: ${locationName}`);
+        searchByLocation(locationName);
+      } else {
+        console.log("No city/suburb found, using default search.");
+        getData("https://api.collection.nfsa.gov.au/search?query=dog");
+      }
+    })
+    .catch((error) => {
+      console.error("Error retrieving location:", error);
+      getData("https://api.collection.nfsa.gov.au/search?query=dog");
+    });
+}
+
+// Function to search NFSA API using city/suburb name
+function searchByLocation(location) {
+  const queryUrl = `https://api.collection.nfsa.gov.au/search?query=${encodeURIComponent(
+    location
+  )}`;
+  console.log(`Searching NFSA API for: ${location}`);
+
+  getData(queryUrl);
+}
+
+// Search box listener
+const searchButton = document.getElementById("searchButton");
+const searchInput = document.getElementById("searchInput");
+if (searchButton && searchInput) {
+  searchButton.addEventListener("click", (event) => {
+    event.preventDefault(); // Prevent form submission if inside a form
+    const query = searchInput.value;
+    searchByText(query);
+  });
+  searchInput.addEventListener("keypress", (event) => {
+    if (event.key === "Enter") {
+      event.preventDefault(); // Prevent form submission if inside a form
+      const query = searchInput.value;
+      searchByText(query);
+    }
+  });
+}
+
 
 // Call function to get user location and fetch API data
 // getLocationAndFetchData();
