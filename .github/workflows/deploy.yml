@@ -16,7 +16,7 @@ jobs:
       - name: Build Eleventy site
         run: npx @11ty/eleventy
         env:
-          ELEVENTY_PATH_PREFIX: /repo-name/
+          ELEVENTY_PATH_PREFIX: /API-example/
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
