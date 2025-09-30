@@ -170,6 +170,10 @@ function createImageMosaic(urls) {
   console.log("Mosaic created with images:", images);
 }
 
+
+
+
+// ========================================================================
 // ===== REDUNDANT CODE =====
 
 // Function to display API results with Bootstrap styling
