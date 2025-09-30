@@ -116,6 +116,12 @@ hr{
 }
 
 form {
+  /* max-width: max-content; */
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--gap-s);
+  & > * {
+  }
   input[type="text"] {
     padding: var(--gap-s);
     border: 1px solid var(--colour-secondary);
@@ -139,6 +145,17 @@ form {
     cursor: pointer;
     &:hover {
       background: var(--colour-highlight);
+    }
+  }
+  .filter{
+    border: 1px solid var(--colour-secondary);
+    display: flex;
+    align-items: center;
+    /* gap: var(--gap-s); */
+    padding: 0 var(--gap-s);
+
+    label{
+      margin-right: var(--gap-s);
     }
   }
 }
